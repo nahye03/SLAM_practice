@@ -83,3 +83,7 @@ target_include_directories(example1 PRIVATE
 target_link_libraries(example1 PRIVATE
         module1
         )
+
+add_executable(eigen_practice
+        examples/eigen_practice.cpp
+        )
