@@ -1,0 +1,31 @@
+name: clang-format #작업할 포멧 이름 : 코드의 format을 맞춰주는 것
+
+# 실행 조건 : master branch에 push할 때, pull request할 때 실행
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch: # 매뉴얼하게 실행하고 싶을 떄
+
+#실행 시킬 것들
+jobs:
+  clang-format:
+    name: clang-format
+    runs-on: ubuntu-latest # 실행되는 곳(마이크로소프트 서버의 ubuntu 기반으로 된 곳)
+    steps: # 실행 순서
+      - name: Checkout source code #소스 코드를 끌고온다
+        uses: actions/checkout@v2
+
+      - name: Run clang-format check script
+        run: |
+          echo "=== clang-format check start ==="
+          ./run-clang-format.py --style file -r modules
+          echo "=== clang-format check finished ==="
+
+# ./run-clang-format.py --style file -r modules
+# 우리가 정한 file로 실행, -r : recursive하게, modules에 적용
+# -i : in 안에서 돌도록
+# 여기에 적용하려면 './run-clang-format.py --style file -r -i modules' 실행
+
